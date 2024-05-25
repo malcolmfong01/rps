@@ -1,0 +1,37 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    background-color: beige;
+}
+
+.choices-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 50px 50px 0px;
+}
+
+.choices-container img {
+    max-width: 20%;
+    height: auto;
+    margin: 20px;
+    border: 2px solid grey;
+}
+
+.results {
+    margin: 0px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scorebox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}

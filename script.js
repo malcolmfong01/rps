@@ -14,25 +14,28 @@ function getComputerChoice()
 
 function getHumanChoice()
 {
-    innerHC = prompt("Rock Paper Scissors! Please pick an option!");
-    innerHC = innerHC.toLowerCase();
-    while(innerHC != "scissors" && innerHC != "paper" && innerHC != "rock")
-    {
-        innerHC = prompt("Invalid Option. Please pick between Rock, Paper or Scissors!");
-        innerHC = innerHC.toLowerCase();
-    }
+    options.addEventListener("click", (event) => {
+        let target = event.target;
 
-    return innerHC;
+        switch(target)
+        {
+        case "rock": return "rock";
+        case "paper": return "paper";
+        case "scissors": return "scissors";
+        default: return;
+        }
+    });
 }
 
 let humanScore = 0, computerScore = 0;
+let results = document.querySelector(".results");
+let currentScore = document.querySelector(".currentScore");
 
-function playRound()
+function playRound(humanChoice)
 {
-    let computerChoice, humanChoice, output;
+    let computerChoice, output;
 
     computerChoice = getComputerChoice();
-    humanChoice = getHumanChoice();
 
     // if human win
     if(computerChoice === "scissors" && humanChoice === "rock" || computerChoice === "rock" && humanChoice === "paper" || computerChoice === "paper" && humanChoice === "scissors"){
@@ -48,19 +51,56 @@ function playRound()
     else{
         output = `It's a draw!`;
     }
-    console.log(output);
+
+    currentStatus = document.createElement("p");
+    currentStatus.textContent = output;
+
+    currentScore.textContent = `${humanScore} : ${computerScore}`
+    results.appendChild(currentStatus);
+
 }
 
-function playGame()
-{
-    for (let n = 0; n < 5; n++)
-    {
-        playRound();
-    }
+let options = document.querySelectorAll(".option");
 
-    if(humanScore > computerScore) console.log(`You Win! ${humanScore}:${computerScore}`);
-    else if(humanScore < computerScore) console.log(`You lose! ${humanScore}:${computerScore}`);
-    else console.log(`It's a draw! ${humanScore}:${computerScore}`);
-}
+options.forEach((option) => {
+    option.addEventListener("click", (event)=> {
 
-playGame();
+        let target = event.target;
+
+        switch(target.id)
+        {
+            case "rock": playRound("rock"); break;
+            case "paper": playRound("paper"); break;
+            case "scissors": playRound("paper"); break;
+            default: alert("Warning: Code Broken");
+        }
+    })
+});
+
+options.forEach((option) => {
+    option.addEventListener("mouseover", (event) => {
+        let target = event.target;
+
+        switch(target.id) {
+            case "rock":
+            case "paper":
+            case "scissors":
+                target.style.border = "4px solid gold";
+                break;
+            default:
+                alert("Warning: Code Broken");
+        }
+    });
+
+    // Add mouseout event listener to reset the border
+    option.addEventListener("mouseout", (event) => {
+        let target = event.target;
+        switch(target.id) {
+            case "rock":
+            case "paper":
+            case "scissors":
+                target.style.border = ""; // Reset to default border
+                break;
+        }
+    });
+});
